@@ -1,0 +1,16 @@
+{
+    "contents" : "library(shiny)\nlibrary(mc2d)\nlibrary(ggplot2)\nlibrary(scales)\n\nN <- 50000\n\nshinyServer(function(input,output){\n  \n  simulate <- reactive( {\n    \n    TEFestimate <- data.frame(L = input$tefl,  ML = input$tefml,  H = input$tefh, CONF = input$tefconf)\n    TSestimate <- data.frame(L = input$tcapl,  ML = input$tcapml,  H = input$tcaph, CONF = input$tcapconf)\n    RSestimate <- data.frame(L = input$csl,  ML = input$csml,  H = input$csh, CONF = input$csconf)\n    LMestimate <- data.frame(L = input$lml, ML = input$lmml, H = input$lmh, CONF = 1)\n    \n    LMsample <- function(x){\n      return(sum(rpert(x, LMestimate$L, LMestimate$ML, LMestimate$H, shape = LMestimate$CONF) ))\n    }\n    \n    TEFsamples <- rpert(N, TEFestimate$L, TEFestimate$ML, TEFestimate$H, shape = TEFestimate$CONF)\n    TSsamples <- rpert(N, TSestimate$L, TSestimate$ML, TSestimate$H, shape = TSestimate$CONF)\n    RSsamples <- rpert(N, RSestimate$L, RSestimate$ML, RSestimate$H, shape = RSestimate$CONF)\n    \n    VULNsamples <- TSsamples > RSsamples\n    LEF <- TEFsamples[VULNsamples]\n    \n    return(sapply(LEF, LMsample))\n    \n  })\n  \n  output$plot <- renderPlot({\n    \n    ALEsamples <- simulate()\n    \n    gg <- ggplot(data.frame(ALEsamples), aes(x = ALEsamples))\n    gg <- gg + geom_histogram(binwidth = diff(range(ALEsamples)/50), aes(y = ..density..), color = \"black\", fill = \"white\")\n    gg <- gg + geom_density(fill = \"steelblue\", alpha = 1/3)\n    gg <- gg + scale_x_continuous(labels = comma)\n    gg <- gg + theme_bw()\n    \n    print(gg)\n    \n  })\n  \n  output$detail <- renderPrint({          \n    ALEsamples <- simulate()\n    print(summary(ALEsamples));\n  })\n  \n  output$detail2 <- renderPrint({\n    ALEsamples <- simulate()\n    VAR <- quantile(ALEsamples, probs=(0.95))\n    print(paste0(\"a  app that perform a simple simulation by adjusting input values\")));\n    print(paste0(\"Losses at 95th percentile are $\", format(VAR, nsmall = 2, big.mark = \",\")));\n   \n  })\n  \n})\n\n",
+    "created" : 1451235930011.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "217928187",
+    "id" : "B40EE443",
+    "lastKnownWriteTime" : 1451237157,
+    "path" : "~/app/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

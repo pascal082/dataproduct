@@ -1,0 +1,16 @@
+{
+    "contents" : "shinyUI(pageWithSidebar(\n  \n  headerPanel(\"SolvoMediocris\"),\n  \n  sidebarPanel(\n    \n    tags$head(\n      tags$style(type=\"text/css\", \"input { font-size:10px; width:40px; display:inline-block; }\"),\n      tags$style(type=\"text/css\", \"#lml, #lmml, #lmh, #lmconf { font-size:10px; width:100px; display:inline-block; }\"),\n      tags$style(type=\"text/css\", \"label { font-size:10px; display:inline-block; }\")\n    ),\n    \n    h4(\"Threat Event Frequency\"),\n    numericInput(\"tefl\", \"Min:\", 10, min = 0, max = 100),\n    numericInput(\"tefml\", \"ML:\", 20, min = 0, max = 100),\n    numericInput(\"tefh\", \"Max:\", 100, min = 0, max = 100),\n    numericInput(\"tefconf\", \"Conf:\", 1, min = 1, max = 5),\n    \n    h4(\"Threat Capability\"),\n    numericInput(\"tcapl\", \"Min:\", 20, min = 0, max = 100),\n    numericInput(\"tcapml\", \"ML:\", 30, min = 0, max = 100),\n    numericInput(\"tcaph\", \"Max:\", 70, min = 0, max = 100),\n    numericInput(\"tcapconf\", \"Conf:\", 1, min = 1, max = 5),\n    \n    h4(\"Control Strength\"),\n    numericInput(\"csl\", \"Min:\", 40, min = 0, max = 100),\n    numericInput(\"csml\", \"ML:\", 50, min = 0, max = 100),\n    numericInput(\"csh\", \"Max:\", 60, min = 0, max = 100),\n    numericInput(\"csconf\", \"Conf:\", 2, min = 1, max = 5),\n    \n    h4(\"Loss Magnitude\"),\n    numericInput(\"lml\", \"Min:\", 100, min = 0),\n    numericInput(\"lmml\", \"ML:\", 500, min = 0), br(),\n    numericInput(\"lmh\", \"Max:\", 10000, min = 0),\n    numericInput(\"lmconf\", \"Conf:\", 1, min = 1, max = 5), br(),\n    \n        \n  ),\n  \n  mainPanel(\n    tabsetPanel(\n      tabPanel(\"Distribution\", plotOutput(\"plot\")),\n      tabPanel(\"Detail\", verbatimTextOutput(\"detail\"), verbatimTextOutput(\"detail2\"))\n    )\n  )\n  \n))",
+    "created" : 1451235925515.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "717810773",
+    "id" : "3AF4684E",
+    "lastKnownWriteTime" : 1451237033,
+    "path" : "~/app/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
